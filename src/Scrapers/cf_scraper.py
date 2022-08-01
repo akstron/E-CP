@@ -1,23 +1,23 @@
-from urllib import response
 import requests
 from bs4 import BeautifulSoup
-
-# result = requests.get('https://codeforces.com/problemset/problem/1711/B')
-# # print(result.content)
-# html_content = result.content
-
-# soup = BeautifulSoup(html_content, 'lxml')
-# # print(soup.prettify())
-# ans = soup.find('div', class_='title')
-# print(ans.text)
 
 '''
     Find codeforces problem
 '''
 from Problem.problem import Problem, Test
+# from requests.auth import HTTPProxyAuth
+from requests.auth import HTTPDigestAuth, HTTPBasicAuth
+
+
+proxies = {
+    "http":"172.31.100.27:3128",
+    "https":"172.31.100.27:3128"
+}
+auth = ("edcguest", "edcguest")
 
 def get_problem(url):
     response = requests.get(url)
+    # response = requests.get(url, proxies=proxies, auth=auth)
     html_content = response.content
     soup = BeautifulSoup(html_content, 'lxml')
     problem = Problem(get_problem_name(soup), get_problem_tests(soup))

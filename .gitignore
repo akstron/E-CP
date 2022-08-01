@@ -1,4 +1,5 @@
-venv
+/venv
 __pycache__
 a.exe
 test.cpp
+code.cpp
