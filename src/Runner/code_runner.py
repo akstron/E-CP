@@ -15,7 +15,7 @@ def run_cpp_code(dest):
     print(compile_result)
 
     if compile_result.returncode != 0:
-        print('Compile error')
+        print(f'Compile error: {compile_result.stderr}')
         return
 
     current_dir = os.listdir('.')
@@ -29,6 +29,10 @@ def run_cpp_code(dest):
                 with open(input_file_path, 'r') as content:   
                     # Run executable file with sample input files
                     exec_result = subprocess.run(['./a'], capture_output=True, text=True, stdin=content)
+
+                    if exec_result.returncode != 0:
+                        click.echo(f'Runtime error: {exec_result.stderr}')
+                        break
 
                     output_file_path = Path(f'output{file_name[5:]}')
 
