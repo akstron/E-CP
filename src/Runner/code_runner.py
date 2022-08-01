@@ -6,7 +6,9 @@ from pathlib import Path
 import subprocess
 import click
 from Runner.error import CodeError
+from Runner.comparator import validate_output
 
+# Update default to point to current directory and find code.cpp or desired name (from env variable)
 @click.command()
 @click.argument('dest', type=str, default='./code.cpp')
 def run_cpp_code(dest):
@@ -37,10 +39,14 @@ def run_cpp_code(dest):
                         # Write output obtained from to output_file
                         with open(output_file_path, 'w') as output_file:
                             output_file.write(exec_result.stdout.strip()) 
+        
+        validate_output('.')
+        
     except (CodeError) as e:
         click.echo(f'Error type: {e.error_type}')
         click.echo(f'Return code: {e.return_code}')
         click.echo(e)
 
-    except Exception:
+    except Exception as e:
+        print(e)
         print('Something went wrong')
