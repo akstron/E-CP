@@ -5,8 +5,8 @@ import os
 from pathlib import Path
 import subprocess
 import click
-from Runner.error import CodeError
-from Runner.comparator import validate_output
+from ..Runner.error import CodeError
+from ..Runner.comparator import validate_output
 
 # Update default to point to current directory and find code.cpp or desired name (from env variable)
 @click.command()

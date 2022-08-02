@@ -1,8 +1,8 @@
 from pathlib import Path
 import click
 import os
-from Scrapers.cf_scraper import get_problem as get_cf_problem
-from Problem.utils import create_test_files
+from ..Scrapers.cf_scraper import get_problem as get_cf_problem
+from ..Problem.utils import create_test_files
 
 @click.command()
 @click.argument('url', type=str)
@@ -31,5 +31,3 @@ def problem(dest, url):
     '''
     with open(code_file, 'a') as file:
         pass
-
-    

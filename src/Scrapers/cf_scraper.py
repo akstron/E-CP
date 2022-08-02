@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 '''
     Find codeforces problem
 '''
-from Problem.problem import Problem, Test
+from ..Problem.problem import Problem, Test
 # from requests.auth import HTTPProxyAuth
 from requests.auth import HTTPDigestAuth, HTTPBasicAuth
 
