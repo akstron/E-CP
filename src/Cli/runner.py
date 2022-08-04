@@ -1,6 +1,6 @@
 from email.policy import default
 import click
-from ..Runner.error import UnsupportedLanguage
+from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
 from ..Config.config import get_lang
 from ..Runner.mapper import runner_map
 

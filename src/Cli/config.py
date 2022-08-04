@@ -2,7 +2,7 @@ import json
 import os
 from pathlib import Path
 import click
-from ..Runner.error import UnsupportedLanguage
+from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
 from ..Config.config import is_lang_supported
 
 @click.command()

@@ -2,7 +2,7 @@ from pathlib import Path
 
 import click
 from ..Runner.mapper import ext_map
-from ..Runner.error import UnsupportedLanguage
+from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
 from ..Config.config import get_lang
 
 def create_test_files(dir, tests):
