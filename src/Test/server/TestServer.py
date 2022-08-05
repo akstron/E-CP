@@ -1,8 +1,9 @@
 from socketserver import TCPServer
-from threading import Thread
-
-import click
 from ..TestTimer import TestTimer
+
+'''
+    Server which manages current test, and respond to requests from Client
+'''
 
 class TestServer(TCPServer):
     def __init__(self, server_address: tuple[str, int], RequestHandlerClass, timer_function, interval = 20) -> None:

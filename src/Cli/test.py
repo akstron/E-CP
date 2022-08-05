@@ -1,6 +1,8 @@
-from email.policy import default
-import click
+'''
+   Test related commands
+'''
 
+import click
 from ..Test.exceptions.TestNotFound import TestNotFound
 from ..Test.exceptions.TestInProgress import TestInProgress
 from ..Test.Test import Test

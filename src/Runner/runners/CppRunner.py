@@ -5,6 +5,9 @@ from pathlib import Path
 from .Runner import Runner
 from ..exceptions.CodeError import CodeError
 
+'''
+    Class to handle C++ code execution
+'''
 class CppRunner(Runner):
     def __init__(self, dest, code_file) -> None:
         super().__init__(dest, code_file)

@@ -5,6 +5,9 @@ from pathlib import Path
 from .Runner import Runner
 from ..exceptions import CodeError
 
+'''
+    Class to handlle python code execution
+'''
 class PythonRunner(Runner):
     def __init__(self, dest, code_file) -> None:
         super().__init__(dest, code_file)

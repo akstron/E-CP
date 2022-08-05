@@ -26,7 +26,7 @@ def validate_output(dest):
                                             click.echo(click.style('WA', bg='red'))
                                         click.echo()
 
-# Function to compare output
+'''Function to compare output'''
 def compare_output(expected, output):
     expected_lines = expected.readlines()
     output_lines = output.readlines()

@@ -2,6 +2,9 @@ import socket
 import pickle
 from ..Message import Message
 
+'''
+    Client class to communicate with TestServer
+'''
 class Client():
     def __init__(self) -> None:
         self.HOST = 'localhost'

@@ -5,6 +5,7 @@ from ..Runner.mapper import ext_map
 from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
 from ..Config.Config import Config
 
+'''Helper function to create test files'''
 def create_test_files(dir, tests):
     index = 1
     for test in tests:
@@ -18,6 +19,7 @@ def create_test_files(dir, tests):
 
         index += 1
 
+'''Helper function to create code file'''
 def create_code_file(dir):
     try:
         config = Config()
@@ -25,14 +27,24 @@ def create_code_file(dir):
         if lang not in ext_map:
             raise UnsupportedLanguage(lang)
 
-        code_file = Path(dir, f'code.{ext_map[lang]}')
+        code_file_path = Path(dir, f'code.{ext_map[lang]}')
         
         ''' 
             'w' with overwrite the file, even if we don't write anything 
             https://stackoverflow.com/questions/16208206/confused-by-python-file-mode-w#:~:text=w%2B-,Opens%20a%20file%20for%20both%20writing%20and%20reading.,file%20for%20reading%20and%20writing.
         '''
-        with open(code_file, 'a') as file:
-            pass
+        with open(code_file_path, 'a') as code_file:
+            template_path = config.get_template_path()
+            try:
+                with open(template_path, 'r') as template:
+                    for line in template:
+                        code_file.write(line)
+            # OSError occurs when file cannot be opened
+            except OSError as e:
+                pass
+            # Re-raise error if some other error occurred
+            except Exception as e:
+                raise
 
     except UnsupportedLanguage as e:
         click.echo(e)

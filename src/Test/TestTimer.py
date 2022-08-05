@@ -1,6 +1,10 @@
 from threading import Timer
 from datetime import datetime
 
+'''
+    TestTimer class to keep track of Test time
+'''
+
 class TestTimer(Timer):
     def __init__(self, interval: float, function, args = None, kwargs = None) -> None:
         super().__init__(interval, function, args, kwargs)

@@ -1,12 +1,14 @@
 from threading import Thread
 import pickle
 from socketserver import BaseRequestHandler
-
 from ..TestTimer import TestTimer
 from ..Message import Message
 
 MAX_LIMIT = 1024
 
+'''
+    Class to hanlde requests sent to server
+'''
 class RequestHandler(BaseRequestHandler):
     def __handle_end_test(self):
         # Stop server thread from another thread to prevent deadlock
@@ -41,5 +43,5 @@ class RequestHandler(BaseRequestHandler):
         elif unpacked_data.message == 'GET-REM-TIME':
             self.__handle_get_rem_time()
         else:
-            self.__handle_invalid_reqest()
+            self.__handle_invalid_request()
 
