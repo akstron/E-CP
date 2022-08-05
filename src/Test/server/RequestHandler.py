@@ -1,23 +1,30 @@
-from os import posix_fadvise
 from threading import Thread
 import pickle
 from socketserver import BaseRequestHandler
+
+from ..TestTimer import TestTimer
 from ..Message import Message
 
 MAX_LIMIT = 1024
 
 class RequestHandler(BaseRequestHandler):
     def __handle_end_test(self):
-        th = Thread(target = self.server.shutdown)
+        # Stop server thread from another thread to prevent deadlock
+        th = Thread(target = self.server.stop_test_server)
         th.start()
 
         send_data = Message('Test ended...')
         packed_data = pickle.dumps(send_data)
         self.request.sendall(packed_data)
-        
 
-    def __handle_get_rem_time():
-        pass
+    def __handle_get_rem_time(self):
+        test_timer : TestTimer = self.server.test_timer
+        rem_time = test_timer.get_rem_time()
+
+        send_data = Message(f'Remaining time: {rem_time}')
+        packed_data = pickle.dumps(send_data)
+        self.request.sendall(packed_data)
+
 
     def handle(self) -> None:
         rec_data = self.request.recv(MAX_LIMIT)

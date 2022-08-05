@@ -1,7 +1,9 @@
-import json
-import pickle
-import socket
+'''
+    Class for handling Test
+'''
 
+import json
+from threading import Thread
 import click
 from ..Config.utils import get_config_path
 from .exceptions.TestInProgress import TestInProgress
@@ -50,7 +52,14 @@ class Test():
             raise TestInProgress()
 
         self.__set_test_in_progress()
-        test_server = TestServer((self.HOST, self.PORT), RequestHandler)
+
+        def timer_function(server : TestServer):
+            th = Thread(target=server.stop_test_server)
+            th.start()
+            click.echo('Test ended...')
+            self.__unset_test_in_progress()
+
+        test_server = TestServer((self.HOST, self.PORT), RequestHandler, timer_function, 20)
         server_thread = ServerThread(test_server)
         server_thread.start()
     
@@ -63,6 +72,18 @@ class Test():
 
         with Client() as client:
             send_message = Message('STOP')
+            client.send_message(send_message)
+
+            rec_message = client.receive_message()
+            click.echo(rec_message.message)
+
+    def get_rem_time(self):
+        test_in_progress = self.__is_test_in_progress()
+        if(not test_in_progress):
+            raise TestNotFound()
+
+        with Client() as client:
+            send_message = Message('GET-REM-TIME')
             client.send_message(send_message)
 
             rec_message = client.receive_message()

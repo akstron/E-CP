@@ -4,11 +4,8 @@ from datetime import datetime
 import click
 
 class TestTimer(Timer):
-    def __init__(self, interval: float) -> None:
-        def func():
-            click.echo('Test finished!')
-            
-        super().__init__(interval, func)
+    def __init__(self, interval: float, function, args = None, kwargs = None) -> None:
+        super().__init__(interval, function, args, kwargs)
         self.start_time = datetime.now()
 
     def __get_elapsed_time(self):
