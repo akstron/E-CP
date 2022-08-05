@@ -36,7 +36,6 @@ class RequestHandler(BaseRequestHandler):
     def handle(self) -> None:
         rec_data = self.request.recv(MAX_LIMIT)
         unpacked_data = pickle.loads(rec_data)
-        print(unpacked_data.message)
 
         if unpacked_data.message == 'STOP':
             self.__handle_end_test()

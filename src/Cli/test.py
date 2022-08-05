@@ -17,6 +17,7 @@ def start(time):
    try:
       test = Test()
       test.start_test(time)
+      click.echo(click.style('Test started...', fg='green'))
    except TestInProgress as e:
       print(e)
    except Exception as e:

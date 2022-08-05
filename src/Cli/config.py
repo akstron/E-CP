@@ -16,6 +16,7 @@ def set_lang(lang):
     try:
         config = Config()
         config.set_lang(lang)
+        click.echo(click.style(f'Language set to {lang}', fg='green'))
 
     except UnsupportedLanguage as e:
         click.echo(e)
@@ -28,8 +29,9 @@ def set_temp(path):
     try:
         config = Config()
         config.set_template(path)
+        click.echo(click.style('Template path set', fg='green'))
     except Exception as e:
-        print(e)
+        click.echo(e)
 
 config.add_command(set_lang)
 config.add_command(set_temp)

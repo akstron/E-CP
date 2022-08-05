@@ -27,7 +27,7 @@ class Test():
         return config['test_in_progress'] == 'True'
 
     def __set_test_in_progress(self):
-        config_file_path = Config().config_path_path
+        config_file_path = Config().config_file_path
         with open(config_file_path, 'r') as config_file:
             config = json.load(config_file)
         
@@ -37,7 +37,7 @@ class Test():
             config_file.write(json.dumps(config))
 
     def __unset_test_in_progress(self):
-        config_file_path = Config().config_path_path
+        config_file_path = Config().config_file_path
         with open(config_file_path, 'r') as config_file:
             config = json.load(config_file)
         
@@ -76,7 +76,7 @@ class Test():
             client.send_message(send_message)
 
             rec_message = client.receive_message()
-            click.echo(rec_message.message)
+            click.echo(click.style(rec_message.message, fg='green'))
 
     def get_rem_time(self):
         test_in_progress = self.__is_test_in_progress()
