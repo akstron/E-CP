@@ -89,7 +89,6 @@ class Test():
 
             rec_message = client.receive_message()
 
-            # click.echo(rec_message.message)
             time_rem = rec_message.message
             minutes = time_rem//60
             seconds = time_rem%60
