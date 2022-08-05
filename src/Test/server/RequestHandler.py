@@ -37,6 +37,3 @@ class RequestHandler(BaseRequestHandler):
             self.__handle_get_rem_time()
         else:
             pass
-
-        # Running in another thread to prevent deadlock
-        

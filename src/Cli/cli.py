@@ -2,7 +2,8 @@ import click
 from .problem import problem
 from .runner import run
 from .config import set_lang
-from .test import start_test, stop_test, time
+# from .test import start_test, stop_test, time
+from .test import test
 
 @click.group()
 def entry_point():
@@ -11,6 +12,7 @@ def entry_point():
 entry_point.add_command(problem)
 entry_point.add_command(run)
 entry_point.add_command(set_lang)
-entry_point.add_command(start_test)
-entry_point.add_command(stop_test)
-entry_point.add_command(time)
+# entry_point.add_command(start_test)
+# entry_point.add_command(stop_test)
+# entry_point.add_command(time)
+entry_point.add_command(test)

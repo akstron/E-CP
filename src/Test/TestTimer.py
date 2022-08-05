@@ -15,3 +15,7 @@ class TestTimer(Timer):
     def get_rem_time(self):
         time_elapsed = self.__get_elapsed_time()
         return self.interval - time_elapsed
+
+    def cancel(self) -> None:
+        print('Cancelling test timer...')
+        return super().cancel()

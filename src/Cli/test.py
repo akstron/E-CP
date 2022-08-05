@@ -1,12 +1,15 @@
 import click
 
-from src.Test.exceptions.TestNotFound import TestNotFound
-
+from ..Test.exceptions.TestNotFound import TestNotFound
 from ..Test.exceptions.TestInProgress import TestInProgress
 from ..Test.Test import Test
 
+@click.group()
+def test():
+   pass
+
 @click.command()
-def start_test():
+def start():
    try:
       test = Test()
       test.start_test()
@@ -16,7 +19,7 @@ def start_test():
       print(e)
 
 @click.command()
-def stop_test():
+def end():
    try:
       test = Test()
       test.stop_test()
@@ -34,3 +37,7 @@ def time():
       print(e)
    except Exception as e:
       print(e)
+
+test.add_command(start)
+test.add_command(end)
+test.add_command(time)
