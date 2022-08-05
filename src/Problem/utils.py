@@ -22,7 +22,7 @@ def create_code_file(dir):
     try:
         lang = get_lang()
         if lang not in ext_map:
-            raise UnsupportedLanguage('lang')
+            raise UnsupportedLanguage(lang)
 
         code_file = Path(dir, f'code.{ext_map[lang]}')
         

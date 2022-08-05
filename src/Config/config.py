@@ -1,11 +1,12 @@
 import json
 import os
 from pathlib import Path
+from .utils import get_config_path
 
 supported_lang = ['cpp', 'python']
 
 def get_lang():
-    config_file_path = Path(os.path.dirname(os.path.realpath(__file__)), 'config.json')
+    config_file_path = get_config_path()
   
     with open(config_file_path, 'r') as config_file:
         config = json.load(config_file)
