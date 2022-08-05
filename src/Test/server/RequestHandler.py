@@ -21,7 +21,12 @@ class RequestHandler(BaseRequestHandler):
         test_timer : TestTimer = self.server.test_timer
         rem_time = test_timer.get_rem_time()
 
-        send_data = Message(f'Remaining time: {rem_time}')
+        send_data = Message(rem_time)
+        packed_data = pickle.dumps(send_data)
+        self.request.sendall(packed_data)
+
+    def __handle_invalid_request(self):
+        send_data = Message('Invalid request')
         packed_data = pickle.dumps(send_data)
         self.request.sendall(packed_data)
 
@@ -36,4 +41,5 @@ class RequestHandler(BaseRequestHandler):
         elif unpacked_data.message == 'GET-REM-TIME':
             self.__handle_get_rem_time()
         else:
-            pass
+            self.__handle_invalid_reqest()
+

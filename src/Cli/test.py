@@ -1,3 +1,4 @@
+from email.policy import default
 import click
 
 from ..Test.exceptions.TestNotFound import TestNotFound
@@ -9,10 +10,11 @@ def test():
    pass
 
 @click.command()
-def start():
+@click.argument('time', type=int, default=30)
+def start(time):
    try:
       test = Test()
-      test.start_test()
+      test.start_test(time)
    except TestInProgress as e:
       print(e)
    except Exception as e:

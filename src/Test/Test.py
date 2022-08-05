@@ -46,7 +46,7 @@ class Test():
         with open(config_file_path, 'w') as config_file:
             config_file.write(json.dumps(config))
 
-    def start_test(self):
+    def start_test(self, time):
         already = self.__is_test_in_progress()
         if already:
             raise TestInProgress()
@@ -59,7 +59,8 @@ class Test():
             click.echo('Test ended...')
             self.__unset_test_in_progress()
 
-        test_server = TestServer((self.HOST, self.PORT), RequestHandler, timer_function, 20)
+        time_in_second = time * 60
+        test_server = TestServer((self.HOST, self.PORT), RequestHandler, timer_function, time_in_second)
         server_thread = ServerThread(test_server)
         server_thread.start()
     
@@ -87,4 +88,20 @@ class Test():
             client.send_message(send_message)
 
             rec_message = client.receive_message()
-            click.echo(rec_message.message)
+
+            # click.echo(rec_message.message)
+            time_rem = rec_message.message
+            minutes = time_rem//60
+            seconds = time_rem%60
+
+            print_message = ''
+            if(minutes > 0):
+                print_message += f'{minutes} minute'
+                if(minutes > 1):
+                    print_message += 's'
+                
+                print_message += ' '
+            
+            print_message += f'{seconds} seconds'
+
+            click.echo(print_message)
