@@ -1,7 +1,7 @@
 from pathlib import Path
 import click
 from .exceptions.CodeError import CodeError
-from .comparator import validate_output
+from .TestValidator import TestValidator
 from .runners.CppRunner import CppRunner
 from .runners.PythonRunner import PythonRunner
 
@@ -15,7 +15,9 @@ def run_cpp_code(dest, custom):
             runner.run_on_custom()
         else :
             runner.run_on_test_files()
-            validate_output(dest)
+            # validate_output(dest)
+            validator = TestValidator(dest)
+            validator.validate_output()
         
     except CodeError as e:
         click.echo(e)
@@ -32,7 +34,9 @@ def run_python_code(dest, custom):
             runner.run_on_custom()
         else :
             runner.run_on_test_files()
-            validate_output(dest)
+            # validate_output(dest)
+            validator = TestValidator(dest)
+            validator.validate_output()
 
     except CodeError as e:
         click.echo(e)
