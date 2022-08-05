@@ -3,7 +3,7 @@ from pathlib import Path
 import click
 from ..Runner.mapper import ext_map
 from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
-from ..Config.config import get_lang
+from ..Config.Config import Config
 
 def create_test_files(dir, tests):
     index = 1
@@ -20,7 +20,8 @@ def create_test_files(dir, tests):
 
 def create_code_file(dir):
     try:
-        lang = get_lang()
+        config = Config()
+        lang = config.get_lang()
         if lang not in ext_map:
             raise UnsupportedLanguage(lang)
 

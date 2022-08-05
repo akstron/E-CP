@@ -1,7 +1,6 @@
-from email.policy import default
 import click
 from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
-from ..Config.config import get_lang
+from ..Config.Config import Config
 from ..Runner.mapper import runner_map
 
 @click.command()
@@ -9,7 +8,8 @@ from ..Runner.mapper import runner_map
 @click.option('-c', is_flag = True, default = False)
 def run(dest, c):
     try:
-        lang = get_lang()
+        config = Config()
+        lang = config.get_lang()
         if(lang not in runner_map):
             raise UnsupportedLanguage(lang)
 

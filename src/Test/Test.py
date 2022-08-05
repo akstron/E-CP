@@ -5,7 +5,7 @@
 import json
 from threading import Thread
 import click
-from ..Config.utils import get_config_path
+from ..Config.Config import Config
 from .exceptions.TestInProgress import TestInProgress
 from .exceptions.TestNotFound import TestNotFound
 from .server.TestServer import TestServer
@@ -20,14 +20,14 @@ class Test():
         self.PORT = 8000
         
     def __is_test_in_progress(self):
-        config_file_path = get_config_path()
+        config_file_path = Config().config_file_path
         with open(config_file_path, 'r') as config_file:
             config = json.load(config_file)
 
         return config['test_in_progress'] == 'True'
 
     def __set_test_in_progress(self):
-        config_file_path = get_config_path()
+        config_file_path = Config().config_path_path
         with open(config_file_path, 'r') as config_file:
             config = json.load(config_file)
         
@@ -37,7 +37,7 @@ class Test():
             config_file.write(json.dumps(config))
 
     def __unset_test_in_progress(self):
-        config_file_path = get_config_path()
+        config_file_path = Config().config_path_path
         with open(config_file_path, 'r') as config_file:
             config = json.load(config_file)
         

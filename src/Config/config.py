@@ -1,17 +1,36 @@
 import json
 import os
 from pathlib import Path
-from .utils import get_config_path
+from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
 
-supported_lang = ['cpp', 'python']
+class Config():
+    supported_lang = ['cpp', 'python']
 
-def get_lang():
-    config_file_path = get_config_path()
-  
-    with open(config_file_path, 'r') as config_file:
-        config = json.load(config_file)
+    def __init__(self) -> None:
+        self.config_file_path = self.get_config_path()
+
+    def get_config_path(self) -> Path:
+        config_file_path = Path(os.path.dirname(os.path.realpath(__file__)), 'config.json')
+        return config_file_path
+
+    def get_lang(self):
+        config_file_path = self.config_file_path
     
-    return config['language']
+        with open(config_file_path, 'r') as config_file:
+            config = json.load(config_file)
+        
+        return config['language']
 
-def is_lang_supported(lang):
-    return lang in supported_lang
+    def __is_lang_supported(self, lang):
+        return lang in self.supported_lang
+
+    def set_lang(self, lang):
+        if(not self.__is_lang_supported(lang)):
+            raise UnsupportedLanguage(lang)
+
+        with open(self.config_file_path, 'r+') as config_file:
+            config = json.load(config_file)
+            config['language'] = lang
+            config_file.seek(0)
+            config_file.truncate()
+            config_file.write(json.dumps(config))
