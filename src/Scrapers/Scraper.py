@@ -9,9 +9,5 @@ class Scraper:
         self.url = url
 
     @abstractmethod
-    def get_problem_name(self):
-        pass
-
-    @abstractmethod
-    def get_problem_tests(self):
+    def get_problem(self):
         pass
