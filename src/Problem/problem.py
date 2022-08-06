@@ -1,7 +1,6 @@
-class Test:
-    def __init__(self, input, output) -> None:
-        self.input = input
-        self.output = output
+'''
+    Problem class
+'''
 
 class Problem:
     def __init__(self, name, tests = []) -> None:

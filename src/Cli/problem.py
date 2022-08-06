@@ -5,15 +5,16 @@
 from pathlib import Path
 import click
 import os
-from ..Scrapers.cf_scraper import get_problem as get_cf_problem
-from ..Problem.utils import create_code_file, create_test_files
+from ..Scrapers.CFScraper import CFScraper
+from ..Problem.ProblemManager import ProblemManager
 
 @click.command()
 @click.argument('url', type=str)
 @click.argument('dest', type=str, default='.')
 def problem(dest, url):
     try:
-        problem = get_cf_problem(url)
+        scraper = CFScraper(url)
+        problem = scraper.get_problem()
 
         # Create directory
         dir = Path(dest, problem.name)
@@ -22,11 +23,13 @@ def problem(dest, url):
         if(not dir.exists()):
             os.mkdir(dir)
 
+        problem_manager = ProblemManager(dir, problem)
+
         # Create test files
-        create_test_files(dir, problem.tests)
+        problem_manager.create_test_files()
         
         # Create code file
-        create_code_file(dir)
+        problem_manager.create_code_file()
 
         click.echo(click.style('Problem created successfully', fg='green'))
     except Exception as e:

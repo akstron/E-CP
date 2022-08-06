@@ -1,27 +1,40 @@
 from pathlib import Path
-
-import click
+from .Problem import Problem
 from ..Runner.mapper import ext_map
 from ..Runner.exceptions.UnsupportedLanguage import UnsupportedLanguage
 from ..Config.Config import Config
 
-'''Helper function to create test files'''
-def create_test_files(dir, tests):
-    index = 1
-    for test in tests:
-        input_test_file = Path(dir, f'input_{index}.txt')
-        with open(input_test_file, 'w') as file:
-            file.write(test.input)
+'''
+    Class to manage current problem
+'''
+class ProblemManager:
+    def __init__(self, dir, problem:Problem) -> None:
+        self.dir = dir
+        self.problem = problem
+
+    
+    '''Helper function to create test files'''
+    def create_test_files(self):
+        dir = self.dir
+        tests = self.problem.tests
+
+        index = 1
+        for test in tests:
+            input_test_file = Path(dir, f'input_{index}.txt')
+            with open(input_test_file, 'w') as file:
+                file.write(test.input)
+            
+            output_test_file = Path(dir, f'expected_{index}.txt')
+            with open(output_test_file, 'w') as file:
+                file.write(test.output)
+
+            index += 1
+    
         
-        output_test_file = Path(dir, f'expected_{index}.txt')
-        with open(output_test_file, 'w') as file:
-            file.write(test.output)
+    '''Helper function to create code file'''
+    def create_code_file(self):
+        dir = self.dir
 
-        index += 1
-
-'''Helper function to create code file'''
-def create_code_file(dir):
-    try:
         config = Config()
         lang = config.get_lang()
         if lang not in ext_map:
@@ -45,8 +58,3 @@ def create_code_file(dir):
             # Re-raise error if some other error occurred
             except Exception as e:
                 raise
-
-    except UnsupportedLanguage as e:
-        click.echo(e)
-    except Exception as e:
-        click.echo(e)
